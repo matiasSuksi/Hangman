@@ -4,11 +4,13 @@ import os
 
 #sanat
 ammattilista = ["insinööri", "muurari", "sairaanhoitaja", "nuohooja", "kirurgi", "lääkäri", "maalari", "maanviljelijä"]
-hedelmälista = ["banaani", "kiiwi", "persimon", "päärynä"]
+hedelmälista = ["banaani", "kiiwi", "persimon", "päärynä", "avokado", "appelsiini", "mandariini"]
 ajoneuvolista = ["lentokone", "helikopteri", "moottoripyörä", "panssarivaunu"]
+
 kategoria = {"ammatit" : ammattilista, "hedelmät" : hedelmälista, "ajoneuvot" : ajoneuvolista}
 
 arvaukset = int(5)
+väärät_kirjaimet = []
 
 #hirsipuu
 def hirsipuu():
@@ -66,10 +68,13 @@ def sanavalinta():
 
     return valittu_sana
 
-print("Tervetuloa pelaamaan hirsipuuta", os.getlogin())
+def väärä_arvaus(x):
+    väärät_kirjaimet.append(x)
 
 valittu_sana = sanavalinta()
 piilotettu_sana = str(len(valittu_sana)*'_')
+
+print("Tervetuloa pelaamaan hirsipuuta", os.getlogin())
 
 hirsipuu()
 
@@ -90,12 +95,14 @@ while arvaukset >= 0:
             piilotettu_sana = piilotettu_sana[:indeksi] + kirjain + piilotettu_sana[indeksi+1:]
         elif kirjain != arvaus:
             continue
-    
     if arvaus not in valittu_sana:
+        väärä_arvaus(arvaus)
         arvaukset -= 1
+
+    print("Väärät kirjaimet:")
+    print(väärät_kirjaimet)
 
     if arvaukset == -1:
         hirsipuu()
         print("Hävisit pelin", "(° ͜ʖ͡°)╭∩╮")
         break
-
