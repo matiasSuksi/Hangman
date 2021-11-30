@@ -2,16 +2,17 @@ import random
 import os
 
 
-#muuttujat
-wordlist = ['insinööri', 'muurari', 'sairaanhoitaja', 'nuohooja', 'kirurgi', 'lääkäri', 'maalari', 'maanviljelijä']
-chosen_word = str(wordlist[random.randint(0,len(wordlist)-1)])
-guesses = int(5)
-hidden_word = str(len(chosen_word)*'_')
+#sanat
+ammattilista = ["insinööri", "muurari", "sairaanhoitaja", "nuohooja", "kirurgi", "lääkäri", "maalari", "maanviljelijä"]
+hedelmälista = ["banaani", "kiiwi", "persimon", "päärynä"]
+ajoneuvolista = ["lentokone", "helikopteri", "moottoripyörä", "panssarivaunu"]
+kategoria = {"ammatit" : ammattilista, "hedelmät" : hedelmälista, "ajoneuvot" : ajoneuvolista}
 
+arvaukset = int(5)
 
 #hirsipuu
-def hangman():
-    if guesses == -1:
+def hirsipuu():
+    if arvaukset == -1:
         print(' +---+')
         print(' |   |')
         print(' O   |')
@@ -19,7 +20,7 @@ def hangman():
         print('/ \  |')
         print('     |   ')
         print('=========')
-    elif guesses == 0:
+    elif arvaukset == 0:
         print(' +---+')
         print(' |   |')
         print(' O   |')
@@ -27,7 +28,7 @@ def hangman():
         print('/ \  |')
         print('     |   ')
         print('=========')
-    elif guesses == 1:
+    elif arvaukset == 1:
         print(' +---+')
         print(' |   |')
         print(' O   |')
@@ -35,7 +36,7 @@ def hangman():
         print('/    |')
         print('     |   ')
         print('=========')
-    elif guesses == 2:
+    elif arvaukset == 2:
         print(' +---+')
         print(' |   |')
         print(' O   |')
@@ -43,43 +44,58 @@ def hangman():
         print('     |')
         print('     |   ')
         print('=========')
-    elif guesses == 3:
+    elif arvaukset == 3:
         print('     |')
         print('     |')
         print('     |')
         print('     |   ')
         print('=========')
-    elif guesses == 4:
+    elif arvaukset == 4:
         print('     |   ')
         print('=========')
 
-hangman()
+def sanavalinta():
+    for x in kategoria:
+        print(x)
+    kategoriavalinta = str(input("Valitse sanakategoria: "))
+    if kategoriavalinta == kategoria.keys():
+        print(kategoria[kategoriavalinta])
+    for z in kategoria[kategoriavalinta]:
+        print(z)
+    valittu_sana = str(input("Valitse sana: "))
 
-print('Tervetuloa pelaamaan hirsipuuta', os.getlogin())
+    return valittu_sana
 
+print("Tervetuloa pelaamaan hirsipuuta", os.getlogin())
+
+valittu_sana = sanavalinta()
+piilotettu_sana = str(len(valittu_sana)*'_')
+
+hirsipuu()
 
 #peli-loop
-while guesses >= 0:
+while arvaukset >= 0:
 
-    print('Arvaa ammatti!')
-    print(hidden_word)
-    print('Arvauksia jäljellä:')
-    print(guesses)
+    print("Arvaa ammatti!")
+    print(piilotettu_sana)
+    print("Arvauksia jäljellä:")
+    print(arvaukset)
 
-    hangman()
+    hirsipuu()
 
-    guess = str(input())
+    arvaus = str(input())
 
-    for index, letter in enumerate(chosen_word):
-        if letter == guess:
-            hidden_word = hidden_word[:index] + letter + hidden_word[index+1:]
-        elif letter != guess:
+    for indeksi, kirjain in enumerate(valittu_sana):
+        if kirjain == arvaus:
+            piilotettu_sana = piilotettu_sana[:indeksi] + kirjain + piilotettu_sana[indeksi+1:]
+        elif kirjain != arvaus:
             continue
     
-    if guess not in chosen_word:
-        guesses -= 1
+    if arvaus not in valittu_sana:
+        arvaukset -= 1
 
-    if guesses == -1:
-        hangman()
-        print('Hävisit pelin', '(° ͜ʖ͡°)╭∩╮')
+    if arvaukset == -1:
+        hirsipuu()
+        print("Hävisit pelin", "(° ͜ʖ͡°)╭∩╮")
         break
+
