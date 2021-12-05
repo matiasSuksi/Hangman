@@ -1,6 +1,9 @@
 import random
 import os
 
+#määritellään boolean peli muutuja while looppia varten 
+peli = True
+
 
 #sanat
 ammattilista = ["insinööri", "muurari", "sairaanhoitaja", "nuohooja", "kirurgi", "lääkäri", "maalari", "maanviljelijä"]
@@ -11,6 +14,9 @@ kategoria = {"ammatit" : ammattilista, "hedelmät" : hedelmälista, "ajoneuvot" 
 
 arvaukset = int(5)
 väärät_kirjaimet = []
+
+#määritellään pelaajalista arvaajien keräämistä varten
+pelaajalista = []
 
 
 #hirsipuu
@@ -71,6 +77,14 @@ def sanavalinta():
 
 #Käydään läpi hirsipuuhun valittua sanaa ja verrataan käyttäjän syöttämää kirjainta
 def arvaaminen():
+    if arvaus == valittu_sana:
+        print("Voititte pelin <3")
+        print("Hienoa työtä:")
+        for pelaaja in pelaajalista:
+            print(pelaaja)
+        global peli
+        peli = False
+
     for indeksi, kirjain in enumerate(valittu_sana):
         if kirjain == arvaus:
             global piilotettu_sana
@@ -82,10 +96,36 @@ def arvaaminen():
         global arvaukset
         arvaukset -= 1
 
+
 def väärä_arvaus(x):
     väärät_kirjaimet.append(x)
 
 
+#Funktio, jolla pyydetään pelinjohtajan nimi, joka keksii arvattavan sanan.
+def pelinjohtaja():
+    pelinjohtaja = input("Syötä nimimerkki: ")
+    print("Tervetuloa pelinjohtaja:", pelinjohtaja)
+
+#Funktio, jolla kysytään sanan arvaajat. Maksimi mmäärä arvaajia on kolme.
+def arvaajat():    
+    laskuri = 0
+    global pelaajalista
+    while True:
+        pelaajat = input("Syötä nimimerkki: ")
+        if pelaajat == "-1":
+            print("Arvaajat syötetty. Voitte aloittaa arvaamaan")
+            break
+        elif laskuri < 3:            
+            pelaajalista.append(pelaajat)
+            laskuri += 1
+        else:
+            print("Maksimi määrä arvaajia. Voitte aloittaa arvaamaan.")
+            break
+    print(pelaajalista)
+
+        
+pelinjohtaja()
+arvaajat()
 valittu_sana = sanavalinta()
 piilotettu_sana = str(len(valittu_sana)*'_')
 
@@ -95,7 +135,7 @@ hirsipuu()
 
 
 #peli-loop
-while arvaukset >= 0:
+while peli == True:
 
     print("Arvaa ammatti!")
     print(piilotettu_sana)
@@ -115,7 +155,12 @@ while arvaukset >= 0:
     if arvaukset == -1:
         hirsipuu()
         print("Hävisit pelin", "(° ͜ʖ͡°)╭∩╮")
+        print(pelinjohtaja,"oli teitä parempi. Haahaa!")
         break
     elif piilotettu_sana == valittu_sana:
-        print("Voitit pelin <3")
+        print("Voititte pelin <3")
+        print("Hienoa työtä:")
+        for pelaaja in pelaajalista:
+            print(pelaaja)
         break
+
