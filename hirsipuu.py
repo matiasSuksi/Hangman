@@ -57,6 +57,7 @@ def hirsipuu():
         print('     |   ')
         print('=========')
 
+#Funktio, jolla valitaan hirsipuuhun sana
 def sanavalinta():
     for x in kategoria:
         print(x)
@@ -82,6 +83,7 @@ def arvaaminen():
         global arvaukset
         arvaukset -= 1
 
+#Funktio, joka lisää listaan väärät arvaukset
 def väärä_arvaus(x):
     väärät_kirjaimet.append(x)
 
@@ -94,7 +96,7 @@ print("Tervetuloa pelaamaan hirsipuuta", os.getlogin())
 hirsipuu()
 
 
-#peli-loop
+#Peli-loop
 while arvaukset >= 0:
 
     print("Arvaa ammatti!")
