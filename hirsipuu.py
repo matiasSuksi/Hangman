@@ -12,6 +12,7 @@ kategoria = {"ammatit" : ammattilista, "hedelmät" : hedelmälista, "ajoneuvot" 
 arvaukset = int(5)
 väärät_kirjaimet = []
 
+
 #hirsipuu
 def hirsipuu():
     if arvaukset == -1:
@@ -68,15 +69,30 @@ def sanavalinta():
 
     return valittu_sana
 
+#Käydään läpi hirsipuuhun valittua sanaa ja verrataan käyttäjän syöttämää kirjainta
+def arvaaminen():
+    for indeksi, kirjain in enumerate(valittu_sana):
+        if kirjain == arvaus:
+            global piilotettu_sana
+            piilotettu_sana = piilotettu_sana[:indeksi] + kirjain + piilotettu_sana[indeksi+1:]
+        elif kirjain != arvaus:
+            continue
+    if arvaus not in valittu_sana:
+        väärä_arvaus(arvaus)
+        global arvaukset
+        arvaukset -= 1
+
 def väärä_arvaus(x):
     väärät_kirjaimet.append(x)
+
 
 valittu_sana = sanavalinta()
 piilotettu_sana = str(len(valittu_sana)*'_')
 
-print("Tervetuloa pelaamaan hirsipuuta", os.getlogin())
 
+print("Tervetuloa pelaamaan hirsipuuta", os.getlogin())
 hirsipuu()
+
 
 #peli-loop
 while arvaukset >= 0:
@@ -90,19 +106,16 @@ while arvaukset >= 0:
 
     arvaus = str(input())
 
-    for indeksi, kirjain in enumerate(valittu_sana):
-        if kirjain == arvaus:
-            piilotettu_sana = piilotettu_sana[:indeksi] + kirjain + piilotettu_sana[indeksi+1:]
-        elif kirjain != arvaus:
-            continue
-    if arvaus not in valittu_sana:
-        väärä_arvaus(arvaus)
-        arvaukset -= 1
-
+    arvaaminen()
+ 
     print("Väärät kirjaimet:")
     print(väärät_kirjaimet)
 
+    #Pelin lopetus
     if arvaukset == -1:
         hirsipuu()
         print("Hävisit pelin", "(° ͜ʖ͡°)╭∩╮")
+        break
+    elif piilotettu_sana == valittu_sana:
+        print("Voitit pelin <3")
         break
