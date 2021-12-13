@@ -2,7 +2,7 @@
 Perinteinen hirsipuu Pythonilla. 
 Helppo pelata terminaalissa.
 
-Pelin Aloitus:
+Pelin aloitus:
 Peli alkaa, kun koodin käynnistää terminaalissa.
 
 Pelaajien kyselyt:
@@ -18,8 +18,8 @@ Pelaajat voivat alkaa arvaamaan kirjaimia. Jos kirjain menee oikein lisätään 
 Mikäli 5 väärää arvausta, niin pelaajat häviävät pelin. Pelaajat voivat myös arvata koko sanan ja voittavat pelin.
 
 Jokainen pelattu peli tallennetaan tulosseuranta.txt tiedostoon lokina. 
-Pelin jälkeen voi halutessaan tarkastella lokia vastaamalla y kysymykseen lokin lukemsesta.
-Mikäli pelaaja ei halua lukea lokia. Voi painaa enter.
+Pelin jälkeen voi halutessaan tarkastella lokia vastaamalla y kysymykseen lokin lukemisesta.
+Mikäli pelaaja ei halua lukea lokia, voi painaa ENTER.
 
 
 
