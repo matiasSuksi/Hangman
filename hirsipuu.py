@@ -1,23 +1,28 @@
-import random
-import os
+from os import system, name
 
 #määritellään boolean peli muutuja while looppia varten 
 peli = True
 
-
-#sanat
+#sanavaihtoehdot
 ammattilista = ["insinööri", "muurari", "sairaanhoitaja", "nuohooja", "kirurgi", "lääkäri", "maalari", "maanviljelijä"]
 hedelmälista = ["banaani", "kiiwi", "persimon", "päärynä", "avokado", "appelsiini", "mandariini"]
 ajoneuvolista = ["lentokone", "helikopteri", "moottoripyörä", "panssarivaunu"]
 
+#kategoriat, joista pelinjohtaja valitsee sanan
 kategoria = {"ammatit" : ammattilista, "hedelmät" : hedelmälista, "ajoneuvot" : ajoneuvolista}
 
+#globaalit muuttujat peliä varten
 arvaukset = int(5)
 väärät_kirjaimet = []
-
-#määritellään pelaajalista arvaajien keräämistä varten
 pelaajalista = []
 
+
+#tyhjennetään terminaali ennen pelin alkamista, jotta arvaajat eivät nää valittua sanaa eivätkä sanavaihtoehtoja
+def terminaalintyhjennys():
+    if name == 'nt':
+        _ = system('cls')
+    else:
+        _ = system('clear')
 
 #hirsipuu
 def hirsipuu():
@@ -68,8 +73,10 @@ def sanavalinta():
     for x in kategoria:
         print(x)
     kategoriavalinta = str(input("Valitse sanakategoria: "))
+
     if kategoriavalinta == kategoria.keys():
         print(kategoria[kategoriavalinta])
+
     for z in kategoria[kategoriavalinta]:
         print(z)
     valittu_sana = str(input("Valitse sana: "))
@@ -97,14 +104,9 @@ def arvaaminen():
         global arvaukset
         arvaukset -= 1
 
-<<<<<<< HEAD
-#Funktio, joka lisää listaan väärät arvaukset
-=======
-
->>>>>>> 0a89f642b2551045bf47eb05c35b2f246439a0c4
+#funktio, joka lisää väärät kirjaimet listaan
 def väärä_arvaus(x):
     väärät_kirjaimet.append(x)
-
 
 #Funktio, jolla pyydetään pelinjohtajan nimi, joka keksii arvattavan sanan.
 def pelinjohtaja():
@@ -134,18 +136,14 @@ arvaajat()
 valittu_sana = sanavalinta()
 piilotettu_sana = str(len(valittu_sana)*'_')
 
+terminaalintyhjennys()
 
-print("Tervetuloa pelaamaan hirsipuuta", os.getlogin())
+print("Tervetuloa pelaamaan hirsipuuta")
 hirsipuu()
 
 
-<<<<<<< HEAD
-#Peli-loop
-while arvaukset >= 0:
-=======
 #peli-loop
 while peli == True:
->>>>>>> 0a89f642b2551045bf47eb05c35b2f246439a0c4
 
     print("Arvaa ammatti!")
     print(piilotettu_sana)
